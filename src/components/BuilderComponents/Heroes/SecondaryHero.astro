@@ -1,0 +1,17 @@
+---
+import Button from "@components/Button.astro"
+const { title, subtitle, description, buttons, image, style } = Astro.props
+---
+
+
+<div class="bg-white">
+  <div class="mx-auto max-w-7xl px-6 lg:py-14 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:text-center">
+      <h2 class="text-base font-semibold leading-7 text-indigo-600">{subtitle}</h2>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{title}</p>
+      <p class="mt-6 text-lg leading-8 text-gray-600">{description}</p>
+      <div class="mt-10 flex items-center lg:justify-center gap-x-6 justify-start">
+        {buttons.map(button => (<Button text={button.text} url={button.url} style={button.style} />))}            
+      </div>
+    </div>
+  </div>

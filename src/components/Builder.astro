@@ -1,0 +1,25 @@
+---
+import Testimonial from "./BuilderComponents/Testimonial.astro"
+import BlogGrid from "./BuilderComponents/BlogGrid.astro"
+import Hero from "./BuilderComponents/Hero.astro"
+import FeatureList from "./BuilderComponents/FeatureList.astro"
+const { data, type } = Astro.props
+---
+
+
+{
+    () => {
+        switch (type) {
+            case 'Hero':
+                return <Hero title={data.title} description={data.description} buttons={data.buttons} image={data.image} style={data.style} />	
+            case 'Testimonial':
+                return <Testimonial citationName={data.citationName} citationTitle={data.citationTitle} quote={data.quote} />	
+            case 'Grid':
+                return <BlogGrid title={data.title} description={data.description} items={data.post} />
+            case 'FeatureList':
+                return <FeatureList title={data.title} subtitle={data.subtitle} description={data.description} features={data.features} />
+            default:
+                break;
+        }
+    }
+}

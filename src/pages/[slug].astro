@@ -1,12 +1,12 @@
 ---
-import Main from "../layouts/Main.astro"
-import {GraphQLClient} from "graphql-request"
-import Builder from "../components/Builder.astro"
-import client from '@utils/client'
+import Main from "../layouts/Main.astro";
+import Builder from "../components/Builder.astro";
+import client from "@utils/client";
 
-const query = `
-query MyQuery {
-  page(where: {slug: "homepage"}) {
+export const getStaticPaths = async () => {
+  const query = `
+query PagesQuery {
+  pages {
     title
     slug
     sections {
@@ -15,7 +15,6 @@ query MyQuery {
         id
         style
         title
-        subtitle
         description
         buttons {
           style
@@ -58,20 +57,27 @@ query MyQuery {
       }
     }
   }
-}`
+}`;
 
-const {page} = await client.request(query)
+  async function formatData(data) {
+    const formatted = data.map((item) => ({
+      params: { slug: item.slug },
+      props: { item },
+    }));
+
+    return formatted;
+  }
+  const pages = await client.request(query);
+  return formatData(pages.pages);
+};
+
+const { item } = Astro.props;
 ---
 
-<Main title="Homepage Title">
-
-
-
-	{
-		page.sections.map(section => {
-			return 	<Builder type={section.__typename} data={section} />
-
-		})
-	}
-
+<Main title={item.title}>
+  {
+    item.sections.map((section) => {
+      return <Builder type={section.__typename} data={section} />;
+    })
+  }
 </Main>

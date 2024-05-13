@@ -1,0 +1,41 @@
+---
+import NavList from "@components/NavList.astro"
+import MobileNav from "../components/MobileNav.astro"
+
+
+const { title } = Astro.props
+---
+
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+
+		<div class="bg-white">
+			<header class="inset-x-0 top-0 max-w-screen-xl m-auto z-50">
+			  <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+				<div class="flex lg:flex-1">
+				  <a href="/" class="-m-1.5 p-1.5">
+					Marketing Site
+				  </a>
+				</div>
+				
+				<div class="hidden lg:flex lg:gap-x-12">
+				  <NavList />
+				</div>
+				<MobileNav />
+			  </nav>
+			  <!-- Mobile menu, show/hide based on menu open state. -->
+
+			</header>
+		  
+
+        <slot />
+    </body>
+</html>

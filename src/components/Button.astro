@@ -1,0 +1,18 @@
+---
+const { style, url, text } = Astro.props
+
+let classes;
+
+if (style === 'primary') {
+  classes = 'rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+} if (style === 'secondary') {
+  classes = 'text-sm font-semibold leading-6 text-grey-900'
+}
+
+---
+
+
+
+
+<a href={url} class:list={classes}>{text} {(style === 'secondary') ? <span aria-hidden="true">→</span> : ''}</a> 
+

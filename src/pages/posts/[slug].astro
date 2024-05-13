@@ -1,0 +1,58 @@
+---
+import RelatedArticle from "@components/RelatedArticle.astro";
+import RichText from "@components/RichText.astro";
+import Interior from "@layouts/Interior.astro";
+import client from "@utils/client";
+
+export const getStaticPaths = async () => {
+  async function formatData(data) {
+    const formatted = data.map((item) => ({
+      params: { slug: item.slug },
+      props: { item },
+    }));
+
+    return formatted;
+  }
+  const posts = await client.request(`query PostsQuery {
+        posts {
+            title
+            slug
+            content {
+                html
+                raw
+                references {
+                    ... on Asset {
+                        id
+                        url
+                        mimeType
+                    }
+                    ... on Post {
+                        id
+                        title
+                        description
+                        slug
+                    }
+                }
+            }
+        }
+    }`);
+  return formatData(posts.posts);
+};
+
+const { item } = Astro.props;
+---
+
+<Interior title={item.title}>
+  <main class="max-w-2xl mx-auto">
+    <h1>{item.title}</h1>
+
+    {
+      item?.content?.raw && (
+        <RichText
+          references={item?.content?.references}
+          content={item.content.raw}
+          />
+          )
+    }
+  </main>
+</Interior>

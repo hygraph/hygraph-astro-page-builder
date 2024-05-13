@@ -1,0 +1,14 @@
+---
+import Main from "./Main.astro";
+
+const {title} = Astro.props
+---
+
+
+<Main title={title}>
+
+    <div class="mx-auto prose my-10 max-w-5xl px-6 lg:px-8">
+        <slot />    
+    </div>
+
+</Main>

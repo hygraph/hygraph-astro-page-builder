@@ -1,0 +1,18 @@
+---
+import { astToHtmlString } from '@graphcms/rich-text-html-renderer';
+
+const { content, renderers, references } = Astro.props
+
+const outputHtml = astToHtmlString({
+    content,
+    references,
+    renderers
+})
+
+
+---
+
+
+
+<div set:html={outputHtml}></div>
+
